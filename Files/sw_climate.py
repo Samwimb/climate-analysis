@@ -88,7 +88,7 @@ def tobs():
     return jsonify(temp_observations)
                       
 @app.route("/api/v1.0/<start>")
-def startdate(start = none):
+def startdate(start = None):
     """JSON list of tmin, tmax, tavg for the dates greater than/equal to date entered"""
     # Query start date
     query_startdate = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start).group_by(Measurement.date).all()
