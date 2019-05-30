@@ -75,12 +75,13 @@ def stations():
 @app.route("/api/v1.0/tobs")
 def tobs():
     """JSON list of temperature Observations (tobs) for the previous year."""
-    last_year_tobs = session.query(Measurement.date, Measurement.tobs).\
+    last_year_tobs = session.query(Measurement.date, Measurement.tobs, Measurement.station).\
     filter(Measurement.date >= '2016-08-23').all()
            
     temp_observations = []
-    for date, tobs in last_year_tobs:
+    for date, tobs, station in last_year_tobs:
         tobs_dict = {}
+        tobs_dict["station"] = station
         tobs_dict["date"] = date
         tobs_dict["tobs"] = tobs
         temp_observations.append(tobs_dict)
